@@ -19,9 +19,9 @@ model Todo {
   image String
 }
 
-model Cars {
-    id Int @id @unique @default( autoincrement())
-    name String
-    photo String
-    model String
+model Car {
+  id    Int    @id @default(autoincrement())
+  name  String
+  model String
+  photo String
 }

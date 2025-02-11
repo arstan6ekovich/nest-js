@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaService } from 'prisma/prisma.service'; // Убедитесь, что PrismaService импортируется корректно
+import { PrismaService } from 'prisma/prisma.service';
 import { CreateCarDto } from './dto/create-car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
 
@@ -14,28 +14,29 @@ export class CarsService {
       model: createCarDto.model,
       photo: createCarDto.photo,
     };
-    const newCar = await this.prismaService.cars.create({
+    const newCar = await this.prismaService.car.create({
+      // 👈 Изменено с `cars` на `car`
       data: newData,
     });
     return { status: HttpStatus.OK, newCar };
   }
 
   async findAll() {
-    return this.prismaService.cars.findMany();
+    return this.prismaService.car.findMany();
   }
 
   async findOne(id: number) {
-    return this.prismaService.cars.findUnique({ where: { id } });
+    return this.prismaService.car.findUnique({ where: { id } }); // 👈 Изменено с `cars` на `car`
   }
 
   async update(id: number, updateCarDto: UpdateCarDto) {
-    return this.prismaService.cars.update({
+    return this.prismaService.car.update({
       where: { id },
       data: updateCarDto,
     });
   }
 
   async remove(id: number) {
-    return this.prismaService.cars.delete({ where: { id } });
+    return this.prismaService.car.delete({ where: { id } }); // 👈 Изменено с `cars` на `car`
   }
 }
