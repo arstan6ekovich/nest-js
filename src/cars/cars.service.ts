@@ -15,7 +15,6 @@ export class CarsService {
       photo: createCarDto.photo,
     };
     const newCar = await this.prismaService.car.create({
-      // 👈 Изменено с `cars` на `car`
       data: newData,
     });
     return { status: HttpStatus.OK, newCar };
@@ -26,7 +25,7 @@ export class CarsService {
   }
 
   async findOne(id: number) {
-    return this.prismaService.car.findUnique({ where: { id } }); // 👈 Изменено с `cars` на `car`
+    return this.prismaService.car.findUnique({ where: { id } });
   }
 
   async update(id: number, updateCarDto: UpdateCarDto) {
@@ -37,6 +36,6 @@ export class CarsService {
   }
 
   async remove(id: number) {
-    return this.prismaService.car.delete({ where: { id } }); // 👈 Изменено с `cars` на `car`
+    return this.prismaService.car.delete({ where: { id } });
   }
 }
