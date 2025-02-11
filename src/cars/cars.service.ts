@@ -5,6 +5,12 @@ import { UpdateCarDto } from './dto/update-car.dto';
 
 @Injectable()
 export class CarsService {
+  private todo: {
+    id: number;
+    name: string;
+    model: string;
+    photo: string;
+  }[] = [];
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(createCarDto: CreateCarDto) {
@@ -14,28 +20,28 @@ export class CarsService {
       model: createCarDto.model,
       photo: createCarDto.photo,
     };
-    const newCar = await this.prismaService.car.create({
+    await this.prismaService.car.create({
       data: newData,
     });
-    return { status: HttpStatus.OK, newCar };
+    return { status: HttpStatus.OK, newData };
   }
 
   async findAll() {
-    return this.prismaService.car.findMany();
+    return await this.prismaService.car.findMany();
   }
 
   async findOne(id: number) {
-    return this.prismaService.car.findUnique({ where: { id } });
+    return await this.prismaService.car.findUnique({ where: { id } });
   }
 
-  async update(id: number, updateCarDto: UpdateCarDto) {
-    return this.prismaService.car.update({
+  async update(id: number, updateTodoDto: UpdateCarDto) {
+    return await this.prismaService.car.update({
       where: { id },
-      data: updateCarDto,
+      data: updateTodoDto,
     });
   }
 
   async remove(id: number) {
-    return this.prismaService.car.delete({ where: { id } });
+    return await this.prismaService.car.delete({ where: { id } });
   }
 }
